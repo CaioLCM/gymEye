@@ -1,0 +1,39 @@
+services:
+  db:
+    image: pgvector/pgvector:pg17
+    container_name: gymeye-db
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: ${POSTGRES_USER:-gymeye}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:-gymeye}
+      POSTGRES_DB: ${POSTGRES_DB:-gymeye}
+    ports:
+      - "${POSTGRES_PORT:-5432}:5432"
+    volumes:
+      - pgdata:/var/lib/postgresql/data
+      - ./sql/init.sql:/docker-entrypoint-initdb.d/init.sql:ro
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ${POSTGRES_USER:-gymeye} -d ${POSTGRES_DB:-gymeye}"]
+      interval: 5s
+      timeout: 5s
+      retries: 10
+
+  front:
+    build: .
+    container_name: gymeye-front
+    restart: unless-stopped
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      DATABASE_URL: postgresql://${POSTGRES_USER:-gymeye}:${POSTGRES_PASSWORD:-gymeye}@db:5432/${POSTGRES_DB:-gymeye}
+    ports:
+      - "8501:8501"
+    volumes:
+      # cache dos pesos do YOLO/FaceNet entre reinicios do container
+      - models:/root/.cache/torch
+      - ./yolov8n.pt:/app/yolov8n.pt:ro
+
+volumes:
+  pgdata:
+  models:
