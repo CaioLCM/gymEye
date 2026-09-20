@@ -8,3 +8,8 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Estado publicado pelo worker
+.state/
+
+yolov8n.pt
