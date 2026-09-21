@@ -386,3 +386,11 @@ O desenvolvimento usou **Claude Code** (Anthropic) como par de programação.
   sobre a arquitetura. As decisões técnicas — cascata YOLO→MTCNN→FaceNet,
   embeddings no pgvector, separação cadastro/reconhecimento, presença que não se
   renova sozinha — foram tomadas e revisadas pela equipe.
+
+### Participaçao de cada membro
+
+- **Caio Lene:** desenvolvimento técnico e apresentação técnica no pitch
+- **Pedro Henrique:** desenvolvimento dos slides e apresentação de mercado no pitch
+- **Heitor Sebastião:** desenvolvimento de slides, roteiro e ideia
+- **Renan Stockler:** desenvolvimento de slides, roteiro e ideia
+- **João Pedro:** desenvolvimento de slides, roteiro e ideia
